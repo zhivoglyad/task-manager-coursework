@@ -20,6 +20,7 @@ interface TaskActions {
   deleteTask: (id: string) => void;
   moveTask: (id: string, status: TaskStatus) => void;
   reorderTasks: (activeId: string, overId: string) => void;
+  resetStore: () => void;
 }
 
 export const useTaskStore = create<TaskState & TaskActions>()(
@@ -66,6 +67,8 @@ export const useTaskStore = create<TaskState & TaskActions>()(
           return { tasks: arrayMove(state.tasks, from, to) };
         });
       },
+
+      resetStore: () => set({ tasks: [] }),
     }),
     { name: 'task-manager:tasks' }
   )
