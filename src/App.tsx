@@ -5,6 +5,7 @@ import { Board } from './features/tasks/Board'
 import { FiltersBar } from './components/FiltersBar'
 import { TaskForm } from './features/tasks/TaskForm'
 import { useTaskStore } from './features/tasks/store'
+import { StatsDashboard } from './features/stats/StatsDashboard'
 import type { Task } from './types/task'
 
 export function App() {
@@ -44,7 +45,7 @@ export function App() {
               <Board onEdit={handleEditTask} onDelete={deleteTask} />
             </>
           ) : (
-            <p className="text-slate-500 dark:text-slate-400">Stats view coming soon</p>
+            <StatsDashboard />
           )}
         </main>
         <TaskForm
