@@ -29,7 +29,7 @@ export function FiltersBar() {
     'px-3 py-2 rounded-lg border-2 text-sm bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors'
 
   return (
-    <div className="flex flex-wrap gap-3 mb-6 items-center">
+    <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 items-center">
       <div className="relative flex-1 min-w-[200px]">
         <Search
           size={16}
@@ -44,8 +44,10 @@ export function FiltersBar() {
         />
         {searchInput && (
           <button
+            type="button"
             onClick={() => setSearchInput('')}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+            aria-label="Clear search"
           >
             <X size={14} />
           </button>
@@ -56,6 +58,7 @@ export function FiltersBar() {
         value={filters.priority}
         onChange={(e) => setPriorityFilter(e.target.value as TaskPriority | 'all')}
         className={selectClassName}
+        aria-label="Filter by priority"
       >
         <option value="all">All priorities</option>
         <option value="high">High</option>
@@ -67,6 +70,7 @@ export function FiltersBar() {
         value={filters.sortBy}
         onChange={(e) => setSortBy(e.target.value as 'createdAt' | 'deadline' | 'priority')}
         className={selectClassName}
+        aria-label="Sort by"
       >
         <option value="createdAt">Created</option>
         <option value="deadline">Deadline</option>
@@ -74,6 +78,7 @@ export function FiltersBar() {
       </select>
 
       <button
+        type="button"
         onClick={() => setSortOrder(filters.sortOrder === 'asc' ? 'desc' : 'asc')}
         className="p-2 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-400 hover:text-indigo-600 transition-colors"
         aria-label="Toggle sort order"
@@ -83,6 +88,7 @@ export function FiltersBar() {
 
       {isFiltered && (
         <button
+          type="button"
           onClick={() => {
             resetFilters()
             setSearchInput('')

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { X } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -10,6 +10,8 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, title, children }: ModalProps) {
+  const panelRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose()
@@ -17,6 +19,18 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [onClose])
+
+  useEffect(() => {
+    if (isOpen) {
+      const timer = setTimeout(() => {
+        const focusable = panelRef.current?.querySelector<HTMLElement>(
+          'input, textarea, select, button, [tabindex]:not([tabindex="-1"])'
+        )
+        focusable?.focus()
+      }, 50)
+      return () => clearTimeout(timer)
+    }
+  }, [isOpen])
 
   return (
     <AnimatePresence>
@@ -30,6 +44,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
           onClick={onClose}
         >
           <motion.div
+            ref={panelRef}
             className="w-full max-w-lg bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700"
             initial={{ opacity: 0, scale: 0.95, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
