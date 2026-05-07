@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { motion } from 'framer-motion'
 
 interface StatCardProps {
   label: string
@@ -35,7 +36,12 @@ export function StatCard({ label, value, icon, accent }: StatCardProps) {
   const colors = accent ? accentMap[accent] : defaultAccent
 
   return (
-    <article className="rounded-2xl p-5 border-2 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+    <motion.article
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+      className="rounded-2xl p-5 border-2 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700"
+    >
       <div className="flex items-start justify-between gap-2">
         <span className="text-sm font-medium text-slate-500 dark:text-slate-400">{label}</span>
         {icon && (
@@ -48,6 +54,6 @@ export function StatCard({ label, value, icon, accent }: StatCardProps) {
         )}
       </div>
       <p className={`text-4xl font-bold mt-1 ${colors.text}`}>{value}</p>
-    </article>
+    </motion.article>
   )
 }
