@@ -16,3 +16,63 @@
     color-scheme: light;
   }
 }
+
+/* react-datepicker overrides */
+.react-datepicker {
+  @apply border border-slate-200 dark:border-slate-600 rounded-xl shadow-xl bg-white dark:bg-slate-800 font-sans text-sm overflow-hidden;
+}
+
+.react-datepicker__header {
+  @apply bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker__day-name {
+  @apply text-slate-700 dark:text-slate-200;
+}
+
+.react-datepicker__day {
+  @apply text-slate-800 dark:text-slate-200 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/40 hover:text-indigo-600 dark:hover:text-indigo-400;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  @apply bg-indigo-500 text-white hover:bg-indigo-600 hover:text-white dark:hover:text-white;
+}
+
+.react-datepicker__day--today {
+  @apply font-bold;
+}
+
+.react-datepicker__day--outside-month {
+  @apply text-slate-400 dark:text-slate-500;
+}
+
+.react-datepicker__navigation-icon::before {
+  @apply border-slate-500 dark:border-slate-400;
+}
+
+.react-datepicker__time-container {
+  @apply border-l border-slate-200 dark:border-slate-600;
+}
+
+.react-datepicker__time {
+  @apply bg-white dark:bg-slate-800;
+}
+
+.react-datepicker__time-list-item {
+  @apply text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 hover:text-indigo-600;
+}
+
+.react-datepicker__time-list-item--selected {
+  @apply bg-indigo-500 text-white hover:bg-indigo-600 hover:text-white dark:hover:text-white;
+}
+
+.react-datepicker__close-icon::after {
+  @apply bg-slate-400 hover:bg-slate-600;
+}
+
+.react-datepicker-popper {
+  @apply z-[9999];
+}

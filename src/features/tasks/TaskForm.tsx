@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react'
+import DatePicker from 'react-datepicker'
+import { enUS } from 'date-fns/locale'
+import 'react-datepicker/dist/react-datepicker.css'
 import { Modal } from '../../components/Modal'
 import { useTaskStore } from './store'
 import type { Task, TaskDraft, TaskPriority, TaskStatus } from '../../types/task'
@@ -25,7 +28,7 @@ export function TaskForm({ isOpen, onClose, taskToEdit }: TaskFormProps) {
   const [description, setDescription] = useState('')
   const [priority, setPriority] = useState<TaskPriority>('medium')
   const [status, setStatus] = useState<TaskStatus>('todo')
-  const [deadline, setDeadline] = useState('')
+  const [deadline, setDeadline] = useState<Date | null>(null)
   const [touched, setTouched] = useState(false)
 
   useEffect(() => {
@@ -34,16 +37,14 @@ export function TaskForm({ isOpen, onClose, taskToEdit }: TaskFormProps) {
       setDescription(taskToEdit.description)
       setPriority(taskToEdit.priority)
       setStatus(taskToEdit.status)
-      setDeadline(
-        taskToEdit.deadline ? new Date(taskToEdit.deadline).toISOString().slice(0, 16) : ''
-      )
+      setDeadline(taskToEdit.deadline ? new Date(taskToEdit.deadline) : null)
       setTouched(false)
     } else if (isOpen) {
       setTitle('')
       setDescription('')
       setPriority('medium')
       setStatus('todo')
-      setDeadline('')
+      setDeadline(null)
       setTouched(false)
     }
   }, [taskToEdit, isOpen])
@@ -60,7 +61,7 @@ export function TaskForm({ isOpen, onClose, taskToEdit }: TaskFormProps) {
       description: description.trim(),
       priority,
       status,
-      deadline: deadline ? new Date(deadline).toISOString() : null,
+      deadline: deadline ? deadline.toISOString() : null,
     }
 
     if (taskToEdit) {
@@ -151,12 +152,22 @@ export function TaskForm({ isOpen, onClose, taskToEdit }: TaskFormProps) {
           <label htmlFor="task-deadline" className={LABEL_CLASS}>
             Deadline
           </label>
-          <input
+          <DatePicker
             id="task-deadline"
-            type="datetime-local"
-            value={deadline}
-            onChange={(e) => setDeadline(e.target.value)}
+            selected={deadline}
+            onChange={(date: Date | null) => setDeadline(date)}
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={15}
+            dateFormat="MMM d, yyyy HH:mm"
+            locale={enUS}
+            placeholderText="Select date and time (optional)"
+            isClearable
+            autoComplete="off"
             className={`${INPUT_BASE} ${BORDER_NORMAL}`}
+            wrapperClassName="w-full"
+            calendarClassName="!font-sans"
+            minDate={new Date()}
           />
         </div>
 
