@@ -12,7 +12,7 @@ import {
 } from '@dnd-kit/core'
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useTaskStore } from './store'
-import { selectTasksByStatus } from './selectors'
+import { useFilteredTasks } from './useFilteredTasks'
 import { Column } from './Column'
 import { TaskCard } from './TaskCard'
 import type { Task, TaskStatus } from '../../types/task'
@@ -33,9 +33,10 @@ const VALID_STATUSES: TaskStatus[] = ['todo', 'in-progress', 'done']
 export function Board({ onEdit, onDelete }: BoardProps) {
   const [activeTask, setActiveTask] = useState<Task | null>(null)
 
-  const tasks = useTaskStore((s) => s.tasks)
+  const allTasks = useTaskStore((s) => s.tasks)
   const moveTask = useTaskStore((s) => s.moveTask)
   const reorderTasks = useTaskStore((s) => s.reorderTasks)
+  const groupedTasks = useFilteredTasks()
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -43,7 +44,7 @@ export function Board({ onEdit, onDelete }: BoardProps) {
   )
 
   function handleDragStart(event: DragStartEvent) {
-    const found = tasks.find((t) => t.id === event.active.id)
+    const found = allTasks.find((t) => t.id === event.active.id)
     setActiveTask(found ?? null)
   }
 
@@ -55,7 +56,7 @@ export function Board({ onEdit, onDelete }: BoardProps) {
     const activeId = active.id as string
     const overId = over.id as string
 
-    const dragged = tasks.find((t) => t.id === activeId)
+    const dragged = allTasks.find((t) => t.id === activeId)
     if (!dragged) return
 
     if (VALID_STATUSES.includes(overId as TaskStatus)) {
@@ -65,7 +66,7 @@ export function Board({ onEdit, onDelete }: BoardProps) {
       return
     }
 
-    const overTask = tasks.find((t) => t.id === overId)
+    const overTask = allTasks.find((t) => t.id === overId)
     if (!overTask) return
 
     if (dragged.status !== overTask.status) {
@@ -88,7 +89,7 @@ export function Board({ onEdit, onDelete }: BoardProps) {
             key={status}
             status={status}
             title={title}
-            tasks={selectTasksByStatus(tasks, status)}
+            tasks={groupedTasks[status]}
             onEdit={onEdit}
             onDelete={onDelete}
           />
