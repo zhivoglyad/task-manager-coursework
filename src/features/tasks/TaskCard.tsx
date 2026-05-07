@@ -17,37 +17,39 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
   }
 
   return (
-    <article className="group relative rounded-xl p-4 border transition-all duration-200 cursor-grab active:cursor-grabbing bg-white border-slate-200 hover:shadow-md hover:border-slate-300 dark:bg-slate-800 dark:border-slate-700 dark:hover:border-slate-600 dark:hover:shadow-slate-900/50">
-      <div className="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+    <article className="group relative rounded-2xl p-5 border-2 transition-all duration-200 cursor-grab active:cursor-grabbing bg-white border-slate-200 hover:shadow-lg hover:border-indigo-200 hover:-translate-y-0.5 dark:bg-slate-800 dark:border-slate-700 dark:hover:border-indigo-500/50 dark:hover:shadow-indigo-950/40">
+      <div className="absolute top-4 right-4 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
         <button
           type="button"
           onClick={() => onEdit(task)}
+          onPointerDown={(e) => e.stopPropagation()}
           aria-label={`Edit task: ${task.title}`}
-          className="p-1.5 rounded-md text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors"
+          className="p-2 rounded-lg text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 transition-colors"
         >
-          <Pencil size={14} aria-hidden="true" />
+          <Pencil size={16} aria-hidden="true" />
         </button>
         <button
           type="button"
           onClick={handleDelete}
+          onPointerDown={(e) => e.stopPropagation()}
           aria-label={`Delete task: ${task.title}`}
-          className="p-1.5 rounded-md text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-colors"
+          className="p-2 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/40 transition-colors"
         >
-          <Trash2 size={14} aria-hidden="true" />
+          <Trash2 size={16} aria-hidden="true" />
         </button>
       </div>
 
-      <h3 className="font-semibold text-[15px] text-slate-900 dark:text-slate-50 line-clamp-2 pr-14">
+      <h3 className="font-bold text-base text-slate-900 dark:text-white line-clamp-2 pr-20 leading-snug">
         {task.title}
       </h3>
 
       {task.description && (
-        <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 mt-1">
+        <p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-2 mt-2 leading-relaxed">
           {task.description}
         </p>
       )}
 
-      <div className="flex items-center gap-2 mt-3 flex-wrap">
+      <div className="flex items-center gap-2 mt-4 flex-wrap">
         <PriorityBadge priority={task.priority} />
         <DeadlineLabel deadline={task.deadline} status={task.status} />
       </div>
