@@ -23,7 +23,7 @@ A feature-rich Kanban-style task management application built as a university co
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | React 18 + TypeScript |
+| Framework | React + TypeScript |
 | Build tool | Vite |
 | Styling | Tailwind CSS v3 |
 | State management | Zustand (with persist middleware) |
