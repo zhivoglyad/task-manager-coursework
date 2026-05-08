@@ -13,12 +13,13 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
   const panelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (!isOpen) return
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose()
     }
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [onClose])
+  }, [isOpen, onClose])
 
   useEffect(() => {
     if (isOpen) {
