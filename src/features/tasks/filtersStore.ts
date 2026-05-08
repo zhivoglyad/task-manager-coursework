@@ -5,14 +5,14 @@ import type { TaskPriority } from '../../types/task'
 export interface TaskFilters {
   search: string
   priority: TaskPriority | 'all'
-  sortBy: 'createdAt' | 'deadline' | 'priority'
+  sortBy: 'none' | 'createdAt' | 'deadline' | 'priority'
   sortOrder: 'asc' | 'desc'
 }
 
 export const DEFAULT_FILTERS: TaskFilters = {
   search: '',
   priority: 'all',
-  sortBy: 'createdAt',
+  sortBy: 'none',
   sortOrder: 'desc',
 }
 

@@ -3,10 +3,15 @@ import { Search, X, ArrowUp, ArrowDown } from 'lucide-react'
 import { useFiltersStore, DEFAULT_FILTERS } from '../features/tasks/filtersStore'
 import { useDebouncedValue } from '../hooks/useDebouncedValue'
 import type { TaskPriority } from '../types/task'
+import type { TaskFilters } from '../features/tasks/filtersStore'
 
 export function FiltersBar() {
-  const { filters, setSearch, setPriorityFilter, setSortBy, setSortOrder, resetFilters } =
-    useFiltersStore()
+  const filters = useFiltersStore((s) => s.filters)
+  const setSearch = useFiltersStore((s) => s.setSearch)
+  const setPriorityFilter = useFiltersStore((s) => s.setPriorityFilter)
+  const setSortBy = useFiltersStore((s) => s.setSortBy)
+  const setSortOrder = useFiltersStore((s) => s.setSortOrder)
+  const resetFilters = useFiltersStore((s) => s.resetFilters)
 
   const [searchInput, setSearchInput] = useState(filters.search)
   const debouncedSearch = useDebouncedValue(searchInput, 300)
@@ -68,10 +73,11 @@ export function FiltersBar() {
 
       <select
         value={filters.sortBy}
-        onChange={(e) => setSortBy(e.target.value as 'createdAt' | 'deadline' | 'priority')}
+        onChange={(e) => setSortBy(e.target.value as TaskFilters['sortBy'])}
         className={selectClassName}
         aria-label="Sort by"
       >
+        <option value="none">No sorting</option>
         <option value="createdAt">Created</option>
         <option value="deadline">Deadline</option>
         <option value="priority">Priority</option>
