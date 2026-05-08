@@ -8,10 +8,11 @@ interface HeaderProps {
 }
 
 export function Header({ activeView, onViewChange, onNewTask }: HeaderProps) {
-  const { theme, toggleTheme } = useThemeStore()
+  const theme = useThemeStore((s) => s.theme)
+  const toggleTheme = useThemeStore((s) => s.toggleTheme)
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-white border-slate-200 dark:bg-slate-900 dark:border-slate-700/50">
+    <header className="sticky top-0 z-40 w-full border-b-2 bg-white border-slate-300 dark:bg-slate-900 dark:border-slate-700/50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
         <div className="flex items-center gap-2 text-slate-900 dark:text-slate-50">
           <CheckSquare size={24} className="text-indigo-500" />
