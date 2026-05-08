@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { ThemeProvider } from './features/theme/ThemeProvider'
 import { Header } from './components/Header'
 import { Board } from './features/tasks/Board'
 import { FiltersBar } from './components/FiltersBar'
 import { TaskForm } from './features/tasks/TaskForm'
 import { useTaskStore } from './features/tasks/store'
-import { StatsDashboard } from './features/stats/StatsDashboard'
 import type { Task } from './types/task'
+
+const StatsDashboard = lazy(() =>
+  import('./features/stats/StatsDashboard').then((m) => ({ default: m.StatsDashboard }))
+)
 
 export function App() {
   const [activeView, setActiveView] = useState<'board' | 'stats'>('board')
@@ -45,7 +48,9 @@ export function App() {
               <Board onEdit={handleEditTask} onDelete={deleteTask} />
             </>
           ) : (
-            <StatsDashboard />
+            <Suspense fallback={<div className="flex justify-center py-24 text-slate-400">Loading...</div>}>
+              <StatsDashboard />
+            </Suspense>
           )}
         </main>
         <TaskForm
