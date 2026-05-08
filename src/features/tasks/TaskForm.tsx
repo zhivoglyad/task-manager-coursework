@@ -181,7 +181,7 @@ export function TaskForm({ isOpen, onClose, taskToEdit }: TaskFormProps) {
           </button>
           <button
             type="submit"
-            disabled={touched && !isValid}
+            disabled={!isValid}
             className="px-4 py-2 rounded-lg text-sm font-medium text-white bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {taskToEdit ? 'Save' : 'Create'}
