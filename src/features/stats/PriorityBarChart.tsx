@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import {
   BarChart,
   Bar,
@@ -21,12 +22,12 @@ const priorities: { key: TaskPriority; label: string }[] = [
 ]
 
 export function PriorityBarChart({ tasks }: PriorityBarChartProps) {
-  const data = priorities.map(({ key, label }) => ({
+  const data = useMemo(() => priorities.map(({ key, label }) => ({
     name: label,
     todo: tasks.filter((t) => t.priority === key && t.status === 'todo').length,
     'in-progress': tasks.filter((t) => t.priority === key && t.status === 'in-progress').length,
     done: tasks.filter((t) => t.priority === key && t.status === 'done').length,
-  }))
+  })), [tasks])
 
   return (
     <section className="rounded-2xl p-5 border-2 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">

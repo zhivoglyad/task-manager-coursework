@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { subDays, format, isSameDay, parseISO } from 'date-fns'
 import {
   LineChart,
@@ -16,9 +17,9 @@ interface CompletionTrendProps {
 }
 
 export function CompletionTrend({ tasks }: CompletionTrendProps) {
+  const days = useMemo(() => {
   const today = new Date()
-
-  const days = Array.from({ length: 14 }, (_, i) => {
+  return Array.from({ length: 14 }, (_, i) => {
     const date = subDays(today, 13 - i)
     return {
       date: format(date, 'MMM d'),
@@ -28,6 +29,7 @@ export function CompletionTrend({ tasks }: CompletionTrendProps) {
       ).length,
     }
   })
+  }, [tasks])
 
   return (
     <section className="rounded-2xl p-5 border-2 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
